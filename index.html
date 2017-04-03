@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        .wrapper div,
+        .counter-wrapper div {
+            width: 40px;
+            height: 40px;
+            border: 1px solid black;
+        }
+
+        .counter, .counter-wrapper {
+            background-color: aquamarine;
+            text-align: center;
+            line-height: 40px;
+        }
+
+        .wrapper, .counter-wrapper {
+            float: left;
+        }
+
+        .on {
+            background-color: red;
+        }
+
+
+    </style>
+</head>
+
+<body>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script>
+    var x = 10;
+    var y = 10;
+
+    var showBottomCounters = function () {
+        $('.wrapper .counter').each(function (index, element) {
+            var $dog = $(element);
+            var $wrapper = $dog.closest('.wrapper');
+            $dog.text($wrapper.find('.on').length);
+        });
+    };
+
+    var showLeftCounters = function () {
+
+        $('.counter-wrapper .counter').each(function (index, element) {
+            var $dog = $(element);
+            var $squares = $('.squares.on:nth-child(' + (index + 1) + ')');
+            console.log(index, $squares);
+            $dog.text($squares.length);
+        });
+    };
+
+    $('<div class="counter-wrapper">').appendTo('body');
+
+    for (i = 0; i < y; i++) {
+        $('<div class="wrapper">').appendTo('body');
+    }
+
+    for (i = 0; i < x; i++) {
+        $('<div class="squares">').appendTo('.wrapper');
+        $('<div class="counter">').appendTo('.counter-wrapper');
+    }
+
+    $('<div class="counter">').appendTo('.wrapper');
+
+
+    $('.wrapper').on('click', 'div.squares', function () {
+        $(this).toggleClass('on');
+        showBottomCounters();
+        showLeftCounters();
+    });
+
+    showBottomCounters();
+    showLeftCounters();
+
+</script>
+
+</html>
